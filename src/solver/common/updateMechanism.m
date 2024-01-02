@@ -1,16 +1,15 @@
 function updatedMech = updateMechanism(mechanism, varargin)
-% define_mechanism.m: defines the structure of the mechanism
+% updateMechanism.m: updates specified parameters of the mechanism.
 %
-%Parameter:
-%         mechanism: mechanism: a struct representing the mechanism.
+%  Parameter:
+%         mechanism: a struct representing the mechanism.
+%
 %         varargin: optional arguments for specifying the kinematics
 %         (position, velocity, acceleration) of the mechanism
 %
-% Returns:
-%         mechanism: a struct that contains the description of the mechanisms
-%         bodies. This includes, joints, center of mass locations, initial
-%         coordinates, joint locations, joint type, and driving
-%         constraint motion definitions.
+%  Returns:
+%         updatedMech: a struct that contains the description of the 
+%         updated mechanisms bodies. 
 %
 
 
