@@ -43,16 +43,21 @@ for i = 1:numel(jointNames)
     columnIndexJ = find(strcmp(bodies, bodyBName)) - 1;
     columnIndexJ = 3*columnIndexJ - 2;
 
+    % Location of local reference frames for body i and j
+    piILocation = commonJoints.(jointName).bodyA.com; % LRF of body i
+    piJLocation = commonJoints.(jointName).bodyB.com; % LRF of body j
+
+    % Coordinate vectors of body i and j
+    qi = commonJoints.(jointName).bodyA.q0;           % coordinate vector qi
+    qj = commonJoints.(jointName).bodyB.q0;           % coordinate vector qj
+    ri = qi(1:2); fi_i = qi(3);
+    rj = qj(1:2); fi_j = qj(3);
+
     if strcmp(type, 'R')
         jointLocation = commonJoints.(jointName).location;
-        piILocation = commonJoints.(jointName).bodyA.com; % Location of LRF of body i
-        piJLocation = commonJoints.(jointName).bodyB.com; % Location of LRF of body j
+        % Vector SA and SB
         SA = jointLocation - piILocation;
         SB = jointLocation - piJLocation;
-        qi = commonJoints.(jointName).bodyA.q0;           % coordinate vector qi
-        qj = commonJoints.(jointName).bodyB.q0;           % coordinate vector qj
-        ri = qi(1:2); fi_i = qi(3);
-        rj = qj(1:2); fi_j = qj(3);
 
         % Check if index I is representing the ground object
         if columnIndexI < 0
@@ -97,56 +102,86 @@ for i = 1:numel(jointNames)
             count_drive = count_drive - 1;
         end
 
-        % Update the row counter
-        rowCounter = rowCounter + 2;
-
     elseif strcmp(type, 'P')
-        piILocation = commonJoints.(jointName).bodyA.com; % Location of LRF of body i
-        piJLocation = commonJoints.(jointName).bodyB.com; % Location of LRF of body j
         % Defining SA, SB and V vectors for translational joint
-        if isfield(commonJoints.(jointName).bodyA, 'joints')
-            subJointNames = fieldnames(commonJoints.(jointName).bodyA.joints);
-            if numel(subJointNames) ~=2
-                error("MyJacobian: Translational joint end is not conected to a body: %s", jointName)
+        if strcmp(commonJoints.(jointName).bodyA.name, 'ground')
+            A = commonJoints.(jointName).reference;
+            if isfield(commonJoints.(jointName).bodyB, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyB.joints);
+                if numel(subJointNames) ~=2
+                    error("Constraints: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        B = commonJoints.(jointName).bodyB.joints.(currentJointName).location;
+                        break
+                    end
+                end
             end
-            % Iterate through all subJoints
-            for j = 1:numel(subJointNames)
-                currentJointName = subJointNames{j};
-                if ~strcmp(currentJointName, jointName)
-                    % Define common refererence point to be able to
-                    % calculate vector u.
-                    A = commonJoints.(jointName).bodyA.joints.(currentJointName).location;
-                    SA = A - piILocation;
-                    break
+
+        elseif strcmp(commonJoints.(jointName).bodyB.name, 'ground')
+            B = commonJoints.(jointName).reference;
+            if isfield(commonJoints.(jointName).bodyA, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyA.joints);
+                if numel(subJointNames) ~=2
+                    error("Constraints: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        % Define common refererence point to be able to
+                        % calculate U
+                        A = commonJoints.(jointName).bodyA.joints.(currentJointName).location;
+                        break
+                    end
+                end
+            end
+
+        else
+            if isfield(commonJoints.(jointName).bodyA, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyA.joints);
+                if numel(subJointNames) ~=2
+                    error("MyJacobian: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        % Define common refererence point to be able to
+                        % calculate vector u.
+                        A = commonJoints.(jointName).bodyA.joints.(currentJointName).location;
+                        break
+                    end
+                end
+            end
+
+            if isfield(commonJoints.(jointName).bodyB, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyB.joints);
+                if numel(subJointNames) ~=2
+                    error("MyJacobian: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        B = commonJoints.(jointName).bodyB.joints.(currentJointName).location;
+                        break
+                    end
                 end
             end
         end
 
-        if isfield(commonJoints.(jointName).bodyB, 'joints')
-            subJointNames = fieldnames(commonJoints.(jointName).bodyB.joints);
-            if numel(subJointNames) ~=2
-                error("MyJacobian: Translational joint end is not conected to a body: %s", jointName)
-            end
-            % Iterate through all subJoints
-            for j = 1:numel(subJointNames)
-                currentJointName = subJointNames{j};
-                if ~strcmp(currentJointName, jointName)
-                    B = commonJoints.(jointName).bodyB.joints.(currentJointName).location;
-                    SB = A - piJLocation;
-                    break
-                end
-            end
-        end
+        % Define SA and SB
+        SA = A - piILocation;
+        SB = A - piJLocation;
         % Define vector d or u that is along the axis of translation, l.
         d = (A - B)/norm(A - B);
         u = d;
         % Vector v is perpendicular to vector d => rotation by 90 degree
         v = Rotation(pi/2)*d;
-        % Coordinate vectors, qi and qj
-        qi = commonJoints.(jointName).bodyA.q0;
-        qj = commonJoints.(jointName).bodyB.q0;
-        ri = qi(1:2); fi_i = qi(3);
-        rj = qj(1:2); fi_j = qj(3);
 
         if columnIndexI < 0
             % Body i is ground; therefore, consider only body j
@@ -203,12 +238,13 @@ for i = 1:numel(jointNames)
             end
         end
 
-        % Update the row counter
-        rowCounter = rowCounter + 2;
-
     else
         error("MyJacobian: Joint type - %s - is invalied (Use either 'R' or 'P')", type)
     end
+
+    % Update the row counter
+    rowCounter = rowCounter + 2;
+
 end
 
 end

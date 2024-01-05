@@ -69,6 +69,13 @@ for i = 1:numBodies
                 if jointA.driving
                     commonJoints.(jointName).fAB = jointA.fAB;
                 end
+                if isfield(jointA, 'reference') && isfield(jointB, 'reference')
+                    if isequal(jointA.reference, jointB.reference)
+                     commonJoints.(jointName).reference = jointA.reference;
+                    else
+                        error("Constrants: the reference point has to be the same.")
+                    end
+                end
             end
         end
     end

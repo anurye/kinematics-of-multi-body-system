@@ -8,6 +8,7 @@ function mechanism = defineMechanism
 %         constraint motion definitions.
 %
 
+% Initialize a struct to represent the mechanism
 mechanism = struct();
 % Ground: center of mass and initial values of the kinematic variables
 % These are fixed since the ground doesn't move.

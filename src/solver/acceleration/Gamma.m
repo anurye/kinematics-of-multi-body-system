@@ -94,39 +94,79 @@ for i = 1:numel(jointNames)
 
     elseif strcmp(type, 'P')
         % Defining SA, SB and V vectors for translational joint
-        if isfield(commonJoints.(jointName).bodyA, 'joints')
-            subJointNames = fieldnames(commonJoints.(jointName).bodyA.joints);
-            if numel(subJointNames) ~=2
-                error("Gamma: Translational joint end is not conected to a body: %s", jointName)
+        if strcmp(commonJoints.(jointName).bodyA.name, 'ground')
+            A = commonJoints.(jointName).reference;
+            if isfield(commonJoints.(jointName).bodyB, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyB.joints);
+                if numel(subJointNames) ~=2
+                    error("Constraints: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        B = commonJoints.(jointName).bodyB.joints.(currentJointName).location;
+                        break
+                    end
+                end
             end
-            % Iterate through all subJoints
-            for j = 1:numel(subJointNames)
-                currentJointName = subJointNames{j};
-                if ~strcmp(currentJointName, jointName)
-                    % Define common refererence point to be able to
-                    % calculate U
-                    A = commonJoints.(jointName).bodyA.joints.(currentJointName).location;
-                    SA = A - piILocation;
-                    break
+
+        elseif strcmp(commonJoints.(jointName).bodyB.name, 'ground')
+            B = commonJoints.(jointName).reference;
+            if isfield(commonJoints.(jointName).bodyA, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyA.joints);
+                if numel(subJointNames) ~=2
+                    error("Constraints: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        % Define common refererence point to be able to
+                        % calculate U
+                        A = commonJoints.(jointName).bodyA.joints.(currentJointName).location;
+                        break
+                    end
+                end
+            end
+
+        else
+            if isfield(commonJoints.(jointName).bodyA, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyA.joints);
+                if numel(subJointNames) ~=2
+                    error("Gamma: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        % Define common refererence point to be able to
+                        % calculate U
+                        A = commonJoints.(jointName).bodyA.joints.(currentJointName).location;
+                        break
+                    end
+                end
+            end
+
+            if isfield(commonJoints.(jointName).bodyB, 'joints')
+                subJointNames = fieldnames(commonJoints.(jointName).bodyB.joints);
+                if numel(subJointNames) ~=2
+                    error("Gamma: Translational joint end is not conected to a body: %s", jointName)
+                end
+                % Iterate through all subJoints
+                for j = 1:numel(subJointNames)
+                    currentJointName = subJointNames{j};
+                    if ~strcmp(currentJointName, jointName)
+                        B = commonJoints.(jointName).bodyB.joints.(currentJointName).location;
+                        break
+                    end
                 end
             end
         end
 
-        if isfield(commonJoints.(jointName).bodyB, 'joints')
-            subJointNames = fieldnames(commonJoints.(jointName).bodyB.joints);
-            if numel(subJointNames) ~=2
-                error("Gamma: Translational joint end is not conected to a body: %s", jointName)
-            end
-            % Iterate through all subJoints
-            for j = 1:numel(subJointNames)
-                currentJointName = subJointNames{j};
-                if ~strcmp(currentJointName, jointName)
-                    B = commonJoints.(jointName).bodyB.joints.(currentJointName).location;
-                    SB = A - piJLocation;
-                    break
-                end
-            end
-        end
+        % Vector SA and SB
+        SA = A - piILocation;
+        SB = A - piJLocation;
         % Define vector d or u that is along the axis of translation, l.
         d = (A - B)/norm(A - B);
         u = d;
