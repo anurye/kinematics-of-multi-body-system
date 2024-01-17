@@ -46,6 +46,10 @@ iter = 1;
 while ((norm(F) > epsi) && (iter < maxIter) )
     F = Constraints(mechanism, t);
     Fq = MyJacobian(mechanism);
+    % Check if singular confuguration is encountered
+    if abs(det(Fq)) <= Zero
+        error("NewtonRaphson: Singularity encountered. det(Fq) = %d\n", det(Fq))
+    end
     q = q - Fq\F; %inv(Fq)*F for efficiency Fq\F
     mechanism = updateMechanism(mechanism, q);
     iter = iter + 1;

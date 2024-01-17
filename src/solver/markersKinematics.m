@@ -68,7 +68,7 @@ for i = 1:numel(bodyNames)
             mechanism.(bodyName).markers.(markerName).ddq = ddqM;
         end
     else
-        if strcmp(bodyName, 'time')
+        if strcmp(bodyName, 'time') || strcmp(bodyName, 'ground')
             continue
         end
         warning("There is no marker associated" + ...

@@ -19,7 +19,7 @@ counter = 1;
 
 % Get common joints between bodies
 commonJoints = findCommonJoints(mechanism);
-save("cj.mat","commonJoints")
+
 % determine the degree of freedom
 dof = degreeOfFreedom(mechanism, commonJoints);
 % Initialize the number of driving constraints

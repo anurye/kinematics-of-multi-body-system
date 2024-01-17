@@ -1,5 +1,5 @@
-function [finalMechanism, time] = bodiesKinematics(mechanism, varargin)
-% BodiesKinematics.m: Perfoms the overall kinematic analysis of the
+function [finalMechanism, time] = Kinematics(mechanism, varargin)
+% Kinematics.m: Perfoms the overall kinematic analysis of the
 % mechanism bodies (i.e., at CoM).
 %
 %  Parameter:
@@ -97,12 +97,15 @@ end
 % Associate the final results to the mechanism
 updatedMechanism = updateMechanism(mechanism, Q, dQ, ddQ);
 
+% Compute the marker point's kinematics as well
+overallKinematics = markersKinematics(updatedMechanism);
+
 % Return output variables based on nargout the user required
 if nargout == 2
-    finalMechanism = updatedMechanism;
+    finalMechanism = overallKinematics;
     time = T;
 elseif nargout == 1
-    finalMechanism = updatedMechanism;
+    finalMechanism = overallKinematics;
     % Add the simulation time instants to the finalMechanism
     finalMechanism.time = T;
 end

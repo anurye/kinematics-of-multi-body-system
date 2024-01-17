@@ -12,6 +12,10 @@ function dq = Velocity(mechanism, t)
 
 % Get the jacobian matrix
 Fq = MyJacobian(mechanism);
+% Check if singular confuguration is encountered
+if abs(det(Fq)) <= Zero
+    error("Velocity: Singularity encountered. det(Fq) = %d\n", det(Fq))
+end
 % Get the right hand side of the velocity equation
 Ft = RightHandSide(mechanism, t);
 

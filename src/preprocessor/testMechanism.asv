@@ -1,5 +1,5 @@
-function mechanism = otherMechanism
-% otherMechanism.m: define a test mechanism for evaluating the performance
+function mechanism = testMechanism
+% testMechanism.m: define a test mechanism for evaluating the performance
 % of the system (whether it is applicable for general case planar
 % mechanism or not)
 %

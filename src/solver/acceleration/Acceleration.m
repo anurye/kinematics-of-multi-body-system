@@ -14,6 +14,10 @@ function ddq = Acceleration(mechanism, t)
 
 % Get the jacobian matrix
 Fq = MyJacobian(mechanism);
+% Check if singular confuguration is encountered
+if abs(det(Fq)) <= Zero
+    error("Acceleration: Singularity encountered. det(Fq) = %d\n", det(Fq))
+end
 % Get gamma vector
 gamma = Gamma(mechanism, t);
 

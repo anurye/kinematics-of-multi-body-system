@@ -99,7 +99,7 @@ mechanism.bodyC3.joints.joint_D.driving = false;
 mechanism.bodyC3.joints.joint_AD.type = 'P';
 mechanism.bodyC3.joints.joint_AD.location = [NaN, NaN]';
 mechanism.bodyC3.joints.joint_AD.driving = true;
-mechanism.bodyC3.joints.joint_AD.fAB = @(t) -0.1*sin(1.5*t+0);  % Specify motion
+mechanism.bodyC3.joints.joint_AD.fAB = @(t) 0.05-0.08*sin(pi*t + pi/4);  % Specify motion
 
 % Markers associated with bodyC3
 mechanism.bodyC3.markers.D.location = [0.2, 0.6]';
@@ -119,7 +119,7 @@ mechanism.bodyC4.joints.joint_A.driving = false;
 mechanism.bodyC4.joints.joint_AD.type = 'P';
 mechanism.bodyC4.joints.joint_AD.location = [NaN, NaN]';
 mechanism.bodyC4.joints.joint_AD.driving = true;
-mechanism.bodyC4.joints.joint_AD.fAB = @(t) -0.1*sin(1.5*t+0);  % Specify motion
+mechanism.bodyC4.joints.joint_AD.fAB = @(t) 0.05-0.08*sin(pi*t + pi/4);  % Specify motion
 
 % Markers associated with bodyC4
 mechanism.bodyC4.markers.A.location = [0, 0]';
@@ -138,7 +138,7 @@ mechanism.bodyC5.joints.joint_H.driving = false;
 mechanism.bodyC5.joints.joint_BH.type = 'P';
 mechanism.bodyC5.joints.joint_BH.location = [NaN, NaN]';
 mechanism.bodyC5.joints.joint_BH.driving = true;
-mechanism.bodyC5.joints.joint_BH.fAB = @(t) -0.1*sin(1.5*t+0);  % Specify motion
+mechanism.bodyC5.joints.joint_BH.fAB = @(t) 0.04-0.1*sin((pi/4)*t - pi/3);  % Specify motion
 
 % Markers associated with bodyC5
 mechanism.bodyC5.markers.H.location = [0.5, 0.8]';
@@ -158,7 +158,7 @@ mechanism.bodyC6.joints.joint_B.driving = false;
 mechanism.bodyC6.joints.joint_BH.type = 'P';
 mechanism.bodyC6.joints.joint_BH.location = [NaN, NaN]';
 mechanism.bodyC6.joints.joint_BH.driving = true;
-mechanism.bodyC6.joints.joint_BH.fAB = @(t) -0.1*sin(1.5*t+0);  % Specify motion
+mechanism.bodyC6.joints.joint_BH.fAB = @(t) 0.04-0.1*sin((pi/4)*t - pi/3);  % Specify motion
 
 % Markers associated with bodyC6
 mechanism.bodyC6.markers.B.location = [0.3, 0]';
