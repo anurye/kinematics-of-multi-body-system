@@ -71,8 +71,8 @@ for i = 1:numel(bodyNames)
         if strcmp(bodyName, 'time') || strcmp(bodyName, 'ground')
             continue
         end
-        warning("There is no marker associated" + ...
-            " with body: %s\n", bodyName);
+        continue
+        %warning("There is no marker associated with body: %s\n", bodyName);
     end
 end
 

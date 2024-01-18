@@ -41,7 +41,7 @@ mechanism.bodyC1.ddq = [0, 0, 0]';
 mechanism.bodyC1.joints.jointA.type = 'R';
 mechanism.bodyC1.joints.jointA.location = [0, 0]';
 mechanism.bodyC1.joints.jointA.driving = true;
-mechanism.bodyC1.joints.jointA.fAB = @(t) t^2 + pi/2;
+mechanism.bodyC1.joints.jointA.fAB = @(t) @(t) t^2 + pi/2;
 
 mechanism.bodyC1.joints.jointB.type = 'R';
 mechanism.bodyC1.joints.jointB.location = [0, 1]';
