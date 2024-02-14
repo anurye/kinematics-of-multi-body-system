@@ -29,12 +29,12 @@ kinematics = Kinematics(mechanism, endTime, steps);
 % Visualizer(markersKinematics, 'm')
 
 % Or we can specify the body name of interest
-bodyNames = {'bodyC10'};
+bodyNames = {'bodyC1', 'bodyC10'};
 Visualizer(kinematics, 'b', bodyNames)
 
 % The same thing for markers as well
 bodyNames = {'bodyC8'};
-markerNames = {'K'};
+markerNames = {'K', 'I'};
 Visualizer(kinematics, 'm', bodyNames, markerNames)
 
 
@@ -59,23 +59,23 @@ bodyC10ddPhi = kinematics.bodyC10.ddq(3, :);
 
 % Kinematics of bodyC10 obtained from Adams
 warningState = warning('off', 'MATLAB:table:ModifiedAndSavedVarnames');
-bodyC10XAdams = readtable("testData\forMainMech\bodyC10CmX.txt");
+bodyC10XAdams = readtable("testData/forMainMech/bodyC10CmX.txt");
 bodyC10XAdams = table2array(bodyC10XAdams(:, 2));
-bodyC10YAdams = readtable("testData\forMainMech\bodyC10CmY.txt");
+bodyC10YAdams = readtable("testData/forMainMech/bodyC10CmY.txt");
 bodyC10YAdams = table2array(bodyC10YAdams(:, 2));
 
-bodyC10VxAdams = readtable("testData\forMainMech\bodyC10CmVx.txt");
+bodyC10VxAdams = readtable("testData/forMainMech/bodyC10CmVx.txt");
 bodyC10VxAdams = table2array(bodyC10VxAdams(:, 2));
-bodyC10VyAdams = readtable("testData\forMainMech\bodyC10CmVy.txt");
+bodyC10VyAdams = readtable("testData/forMainMech/bodyC10CmVy.txt");
 bodyC10VyAdams = table2array(bodyC10VyAdams(:, 2));
-bodyC10dPhiAdams = readtable("testData\forMainMech\bodyC10dPhi.txt");
+bodyC10dPhiAdams = readtable("testData/forMainMech/bodyC10dPhi.txt");
 bodyC10dPhiAdams = table2array(bodyC10dPhiAdams(:, 2));
 
-bodyC10AxAdams = readtable("testData\forMainMech\bodyC10CmAx.txt");
+bodyC10AxAdams = readtable("testData/forMainMech/bodyC10CmAx.txt");
 bodyC10AxAdams = table2array(bodyC10AxAdams(:, 2));
-bodyC10AyAdams = readtable("testData\forMainMech\bodyC10CmAy.txt");
+bodyC10AyAdams = readtable("testData/forMainMech/bodyC10CmAy.txt");
 bodyC10AyAdams = table2array(bodyC10AyAdams(:, 2));
-bodyC10ddPhiAdams = readtable("testData\forMainMech\bodyC10ddPhi.txt");
+bodyC10ddPhiAdams = readtable("testData/forMainMech/bodyC10ddPhi.txt");
 bodyC10ddPhiAdams = table2array(bodyC10ddPhiAdams(:, 2));
 warning(warningState);
 
@@ -225,23 +225,23 @@ bodyC8MarkerKddPhi = kinematics.bodyC8.markers.K.ddq(3, :);
 
 % Kinematics of marker K obtained from Adams
 warningState = warning('off', 'MATLAB:table:ModifiedAndSavedVarnames');
-bodyC8MarkerKXAdams = readtable("testData\forMainMech\bodyC8MarkerKX.txt");
+bodyC8MarkerKXAdams = readtable("testData/forMainMech/bodyC8MarkerKX.txt");
 bodyC8MarkerKXAdams = table2array(bodyC8MarkerKXAdams(:, 2));
-bodyC8MarkerKYAdams = readtable("testData\forMainMech\bodyC8MarkerKY.txt");
+bodyC8MarkerKYAdams = readtable("testData/forMainMech/bodyC8MarkerKY.txt");
 bodyC8MarkerKYAdams = table2array(bodyC8MarkerKYAdams(:, 2));
 
-bodyC8MarkerKVxAdams = readtable("testData\forMainMech\bodyC8MarkerKVx.txt");
+bodyC8MarkerKVxAdams = readtable("testData/forMainMech/bodyC8MarkerKVx.txt");
 bodyC8MarkerKVxAdams = table2array(bodyC8MarkerKVxAdams(:, 2));
-bodyC8MarkerKVyAdams = readtable("testData\forMainMech\bodyC8MarkerKVy.txt");
+bodyC8MarkerKVyAdams = readtable("testData/forMainMech/bodyC8MarkerKVy.txt");
 bodyC8MarkerKVyAdams = table2array(bodyC8MarkerKVyAdams(:, 2));
-bodyC8MarkerKdPhiAdams = readtable("testData\forMainMech\bodyC8MarkerKdPhi.txt");
+bodyC8MarkerKdPhiAdams = readtable("testData/forMainMech/bodyC8MarkerKdPhi.txt");
 bodyC8MarkerKdPhiAdams = table2array(bodyC8MarkerKdPhiAdams(:, 2));
 
-bodyC8MarkerKAxAdams = readtable("testData\forMainMech\bodyC8MarkerKAx.txt");
+bodyC8MarkerKAxAdams = readtable("testData/forMainMech/bodyC8MarkerKAx.txt");
 bodyC8MarkerKAxAdams = table2array(bodyC8MarkerKAxAdams(:, 2));
-bodyC8MarkerKAyAdams = readtable("testData\forMainMech\bodyC8MarkerKAy.txt");
+bodyC8MarkerKAyAdams = readtable("testData/forMainMech/bodyC8MarkerKAy.txt");
 bodyC8MarkerKAyAdams = table2array(bodyC8MarkerKAyAdams(:, 2));
-bodyC8MarkerKddPhiAdams = readtable("testData\forMainMech\bodyC8MarkerKddPhi.txt");
+bodyC8MarkerKddPhiAdams = readtable("testData/forMainMech/bodyC8MarkerKddPhi.txt");
 bodyC8MarkerKddPhiAdams = table2array(bodyC8MarkerKddPhiAdams(:, 2));
 warning(warningState);
 
@@ -393,13 +393,13 @@ bodyC2Ax = testKinematics.bodyC2.ddq(1, :);
 
 % Results obtained from Adams
 warningState = warning('off', 'MATLAB:table:ModifiedAndSavedVarnames');
-bodyC2XAdams = readtable("testData\forTestMech\bodyC2X.txt");
+bodyC2XAdams = readtable("testData/forTestMech/bodyC2X.txt");
 bodyC2XAdams = table2array(bodyC2XAdams(:, 2));
 
-bodyC2VxAdams = readtable("testData\forTestMech\bodyC2Vx.txt");
+bodyC2VxAdams = readtable("testData/forTestMech/bodyC2Vx.txt");
 bodyC2VxAdams = table2array(bodyC2VxAdams(:, 2));
 
-bodyC2AxAdams = readtable("testData\forTestMech\bodyC2Ax.txt");
+bodyC2AxAdams = readtable("testData/forTestMech/bodyC2Ax.txt");
 bodyC2AxAdams = table2array(bodyC2AxAdams(:, 2));
 warning(warningState);
 
