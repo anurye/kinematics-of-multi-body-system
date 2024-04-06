@@ -1,6 +1,6 @@
 # kinematics-of-multi-body-system
 
-MATLAB implementation of a general plannar mechanism kinematics analysis using absolute coordinates.
+Implementation of a general planar mechanism kinematics analysis tool using absolute coordinates in MATLAB.
 
 ## Table of Contents
 
@@ -10,29 +10,34 @@ MATLAB implementation of a general plannar mechanism kinematics analysis using a
 
 ## Usage
 
-To use this project the mechanism must be defined in a specified way as demonstrated in the example below.
+To use this project, the mechanism must be defined in a specified way as demonstrated in the example below.
 The full detail of the example mechanism can be found in the directory `/src/preprocessor`. 
 
-To define the mechanism a MATLAB struct is used. The definition follows the pattern:
+To define the mechanism, a MATLAB struct is used. The definition follows the pattern:
 `mechanismName.bodyName.bodyProperties`
 
 `bodyProperty` includes:
 
 - the location of its center of mass,
-- joints that are associated with the body and their properties which includes:
-  - Joint location (if the type is `P` the location can be just `[NaN, NaN]'`)
+- joints that are associated with the body and their properties which include:
+  - Joint location (if the type is `P`, the location can be just `[NaN, NaN]'`)
   - Joint type either `P` for translational or `R` for revolute
   - Logical variable `driving` to indicate if there is a driving constraint associated with the joint
   - If `driving` is `true`, specify the motion as an anonymous function of time, `fAB`
   - Special Case: if the joint is translational and if it is directly connected to the ground, a reference point must be provided to define the axis of translation accurately.
-- Initial values of the kinematic variable (position `q0`, velocity `dq` and acceleration `ddq`)
+- Initial values of the kinematic variable (position `q0`, velocity `dq`, and acceleration `ddq`)
 - Marker points for which kinematic analysis is to be performed
+  - Marker points on a body named `bodyName` is defined as: `bodyName.markers.markerName.Location`. Then assign the location.
 
-     
-Example Mechanism
-<img src="images/mechanism.jpg" alt="Example Mechanism" width="800" height="700"/>
+### Example
 
-Coordinates
+Mechanism and assignement of absolute coordinates (it doesn't matter where the coordinates are assigned on the bodies; however, for convenience they are put at each CoM):
+<div style="display: flex; justify-content: space-between;">
+    <img src="images/mechanism.jpg" alt="Example Mechanism" width="600" height="500"/>
+    <img src="images/absolute_coordinate.png" alt="Absolute Coordinate" width="600" height="500"/>
+</div>
+
+Coordinates of bodies CoM and joints: 
 <img src="images/coordinates.jpg" alt="Example Image" width="1000" height="300"/>
 
 Example of defining mechanism and its ground
@@ -104,9 +109,9 @@ steps = 100;
 kinematics = Kinematics(mechanism, endTime, steps);
 ```
 
-- Visualization: to visualize bodies kinematics analysis result specify the option `'b'` or `'B'` for markers specify option `'m'` or `'M'`. 
-This will generate plot of position, velocity and acceleration of each body and markers in the mechanism respectively. 
-If interseted only in a certain body(s), you can specify the name(s) as cell arrays.
+### Visualization 
+To visualize bodies kinematics analysis result specify the option `'b'` or `'B'` for markers specify option `'m'` or `'M'`. 
+This will generate a plot of position, velocity and acceleration of each specified body/markers in the mechanism respectively.
 
 ```matlab
 %% Visualization
@@ -127,14 +132,14 @@ Visualizer(kinematics, 'm', bodyNames, markerNames)
 
 ```
 
-- Bodies Kinematics Result
+- Bodies Kinematics:
 <div style="display: flex; justify-content: space-between;">
     <img src="images/bodyC1.png" alt="For body: bodyC1" width="45%" />
     <img src="images/bodyC10.png" alt="For body: bodyC10" width="45%" />
 </div>
 
 
-- Markers Kinematics Result
+- Marker Points Kinematics:
 <div style="display: flex; justify-content: space-between;">
     <img src="images/bodyC8_marker_I.png" alt="For body: bodyC8, Marker: K" width="45%" />
     <img src="images/bodyC8_marker_K.png" alt="For body: bodyC8, Marker: I" width="45%" />
