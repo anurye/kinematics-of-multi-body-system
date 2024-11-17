@@ -149,7 +149,3 @@ Visualizer(kinematics, 'm', bodyNames, markerNames)
 [![MIT License](https://img.shields.io/github/license/anurye/kinematics-of-multi-body-system)](LICENSE)
 
 
-## Contributing
-
-You are welcome to improve and enhance this project. If you have any questions, ideas, or just want to discuss the project, don't hesitate to reach out. 
-
