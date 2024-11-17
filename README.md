@@ -1,12 +1,7 @@
 # kinematics-of-multi-body-system
+[![MIT License](https://img.shields.io/github/license/anurye/kinematics-of-multi-body-system)](LICENSE)
 
 Implementation of a general planar mechanism kinematics analysis tool using absolute coordinates in MATLAB.
-
-## Table of Contents
-
-- [Usage](#usage)
-- [License](#license)
-- [Contributing](#contributing)
 
 ## Usage
 
@@ -144,8 +139,5 @@ Visualizer(kinematics, 'm', bodyNames, markerNames)
     <img src="images/bodyC8_marker_I.png" alt="For body: bodyC8, Marker: K" width="45%" />
     <img src="images/bodyC8_marker_K.png" alt="For body: bodyC8, Marker: I" width="45%" />
 </div>
-
-## License
-[![MIT License](https://img.shields.io/github/license/anurye/kinematics-of-multi-body-system)](LICENSE)
 
 
